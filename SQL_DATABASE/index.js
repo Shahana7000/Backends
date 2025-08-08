@@ -7,21 +7,27 @@ const connection = mysql.createConnection({
     database: 'shahana_app',
     password: 'shahanaa7000'
 });
-
-let users = [
-    ["11", "shahana", "shahana12@gmail.com", "808598"],
-    ["12", "saksham", "saksham120@gmail.com", "909888"],
-    ["13", "sakshi", "sakshi13@gmail.com", "7000606"],
-];
-
+let getRandomUser = () => {
+    return [
+        faker.string.uuid(),
+        faker.internet.username(),
+        faker.internet.email(),
+        faker.internet.password(),
+    ];
+};
 
 let q = "INSERT INTO `users` (`id`, `name`, `email`, `password`) VALUES ?";
+let data = [];
+
+for(let i = 1;i<=100;i++){
+    data.push(getRandomUser());
+}
 
 
 try {
-    connection.query(q, [users], (err, result) => {
+    connection.query(q, [data], (err, result) => {
         if (err) throw err;
-        console.log("Inserted rows:", result.affectedRows);
+        console.log(result);
     });
 } catch (error) {
     console.log("Error:", error);
