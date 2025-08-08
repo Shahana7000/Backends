@@ -8,26 +8,20 @@ const connection = mysql.createConnection({
     password: 'shahanaa7000'
 });
 
-
-let getRandomUser = () => {
-  return [
-    faker.string.uuid(),       
-    faker.internet.userName(), 
-    faker.internet.email(),    
-    faker.internet.password()  
-  ];
-};
-
-let q = "INSERT INTO `user` (`id`, `name`, `email`, `password`) VALUES (?, ?, ?, ?)";
+let users = [
+    ["11", "shahana", "shahana12@gmail.com", "808598"],
+    ["12", "saksham", "saksham120@gmail.com", "909888"],
+    ["13", "sakshi", "sakshi13@gmail.com", "7000606"],
+];
 
 
-let user = getRandomUser();
+let q = "INSERT INTO `users` (`id`, `name`, `email`, `password`) VALUES ?";
+
 
 try {
-    connection.query(q, user, (err, result) => {
+    connection.query(q, [users], (err, result) => {
         if (err) throw err;
-        console.log("✅ Inserted user:", user);
-        console.log("Rows affected:", result.affectedRows);
+        console.log("Inserted rows:", result.affectedRows);
     });
 } catch (error) {
     console.log("Error:", error);
